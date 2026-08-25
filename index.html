@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cash-Flow Tracker</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+    </script>
+
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cash-Flow Tracker</h1>
+            <p>Track your salary and expenses in real-time</p>
+            <div class="theme-toggle-container">
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                    🌙
+                </button>
+                <span id="themeLabel">Dark Mode</span>
+            </div>
+        </header>
+
+        <div class="currency-converter">
+            <label for="currencySelect">Currency:</label>
+            <select id="currencySelect">
+                <option value="INR">₹ INR</option>
+                <option value="USD">$ USD</option>
+                <option value="EUR">€ EUR</option>
+                <option value="GBP">£ GBP</option>
+            </select>
+            <span id="exchangeRate">1 INR = 1.00 INR</span>
+        </div>
+
+        <div id="alertBanner" class="alert-banner hidden">
+            ⚠️ WARNING: Remaining balance is below 10% of total salary!
+        </div>
+
+        <div class="dashboard">
+            <section class="form-section">
+                <h2>Add Expense</h2>
+                <form id="expenseForm">
+                    <div class="form-group">
+                        <label for="salaryInput">Total Amount (<span id="salaryCurrencySymbol">₹</span>)</label>
+                        <input type="number" id="salaryInput" placeholder="Your total income" min="0" step="1" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expenseName">Expense Name</label>
+                        <input type="text" id="expenseName" placeholder="Expense description" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expenseAmount">Expense Amount (<span id="expenseCurrencySymbol">₹</span>)</label>
+                        <input type="number" id="expenseAmount" placeholder="Expense amount" min="0" step="1" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add Expense</button>
+                </form>
+
+                <div id="errorMessage" class="error-message hidden"></div>
+            </section>
+
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card salary">
+                        <h3>Total Salary</h3>
+                        <p id="totalSalaryDisplay">₹ 0</p>
+                    </div>
+                    <div class="stat-card expenses">
+                        <h3>Total Expenses</h3>
+                        <p id="totalExpensesDisplay">₹ 0</p>
+                    </div>
+                    <div class="stat-card balance">
+                        <h3>Remaining Balance</h3>
+                        <p id="balanceDisplay">₹ 0</p>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="expenseChart"></canvas>
+                </div>
+            </section>
+        </div>
+
+        <section class="expense-list-section">
+            <h2>Expense History</h2>
+            <div id="expenseListContainer">
+                <ul id="expenseList">
+                    <li class="empty-state">
+                        📭 No expenses recorded yet. Add your first expense above!
+                    </li>
+                </ul>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                <button id="downloadReportBtn" class="btn btn-secondary">
+                    Download Report (PDF)
+                </button>
+                <button id="clearAllDataBtn" class="btn btn-danger" style="background: #c53030;">
+                    Clear All Data
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/chart.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
